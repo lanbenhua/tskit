@@ -1,0 +1,53 @@
+{
+  "name": "tss",
+  "version": "0.0.1",
+  "description": "ts starter cli",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "prepare": "husky install",
+    "pre-build": "rm -rf ./lib && rollup -c ./rollup.config.js",
+    "start": "npx ts-node ./src/index.ts"
+  },
+  "bin": {
+    "tss": "./cli/index.js"
+  },
+  "files": [
+    "lib",
+    "cli",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0",
+    "prettier": "^2.6.2",
+    "rollup": "^2.70.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-node": "^10.8.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix --cache --max-warnings 0",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "commander": "^9.3.0",
+    "inquirer": "^8.2.4"
+  }
+}
