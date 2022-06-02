@@ -16,6 +16,10 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
-    "no-console": "off"
+    "no-console": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "consistent-return": "off",
+    "no-bitwise": "off",
   },
 };

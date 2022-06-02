@@ -8,7 +8,8 @@
     "prepare": "husky install",
     "pre-build": "rm -rf ./lib && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "build:types": "tsc -d --emitDeclarationOnly --declarationDir lib/types",
-    "start": "npx ts-node ./src/index.ts"
+    "start": "npx ts-node ./src/index.ts",
+    "lint": "tsc --noEmit && eslint --fix --cache --max-warnings 0 --ext .ts,.js ./src && prettier --write ./src"
   },
   "files": [
     "lib",
