@@ -1,14 +1,17 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import rollupTypescript from "@rollup/plugin-typescript";
 // import { terser } from "rollup-plugin-terser";
+import commonjs from '@rollup/plugin-commonjs';
+import { RollupOptions } from "rollup";
 import path from "path";
 
-const cwd = (pathname) => path.resolve(process.cwd(), pathname);
+const cwd = (pathname: string): string => path.resolve(process.cwd(), pathname);
 
-const config = [
+const config: RollupOptions[] = [
   {
     input: cwd("./src/index.ts"),
     plugins: [
+      commonjs(),
       nodeResolve(),
       rollupTypescript({
         tsconfig: cwd("./tsconfig.json"),
@@ -17,7 +20,8 @@ const config = [
     ],
     output: {
       dir: cwd("./lib"),
-      format: "es",
+      // file: './lib/index.js',
+      format: "cjs",
     },
   },
 ];
