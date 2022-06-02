@@ -1,5 +1,5 @@
 {
-  "name": "tss-ts-template",
+  "name": "tskit-ts-template",
   "version": "0.0.1",
   "description": "ts starter template",
   "main": "src/index.ts",

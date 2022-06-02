@@ -5,7 +5,7 @@ var tslib_1 = require("tslib");
 var commander_1 = require("commander");
 var init_1 = tslib_1.__importDefault(require("./init"));
 commander_1.program
-    .name('tss')
+    .name('tskit')
     .description('ts starter cli')
     .version("0.0.1", '-v, --version', 'current version')
     .option("-e, --edit", "edit mode")

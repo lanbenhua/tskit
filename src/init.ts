@@ -15,7 +15,7 @@ const copy = (fromDir: string, toDir: string) => {
 
   if (!isExists(toDir)) {
     fs.mkdirSync(toDir);
-    console.log(chalk.green(`[tss] created '${toDir}'`));
+    console.log(chalk.green(`[tskit] created '${toDir}'`));
   }
   if (!isDirectory(toDir)) throw new Error(`${toDir} is not a directory.`);
 
@@ -28,7 +28,7 @@ const copy = (fromDir: string, toDir: string) => {
 
       if (isFile(fromPath)) {
         fs.openSync(toPath, fs.constants.O_CREAT | fs.constants.O_TRUNC, 0o777);
-        console.log(chalk.green(`[tss] created '${toPath}'`));
+        console.log(chalk.green(`[tskit] created '${toPath}'`));
 
         fs.createReadStream(fromPath, { mode: 0o777 }).pipe(
           fs.createWriteStream(toPath, { mode: 0o777 })
@@ -48,9 +48,9 @@ const init = (dir: string, template: string, force?: boolean) => {
     );
 
   if (force && isDirExists) {
-    console.log(chalk.green(`[tss] exists '${fullDirPath}'`));
+    console.log(chalk.green(`[tskit] exists '${fullDirPath}'`));
     fs.rmdirSync(dir, { recursive: true });
-    console.log(chalk.green(`[tss] removed '${fullDirPath}'`));
+    console.log(chalk.green(`[tskit] removed '${fullDirPath}'`));
   }
 
   const templateDir = getTemplateDir(template);

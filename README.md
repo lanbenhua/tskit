@@ -1,2 +1,2 @@
-# tss
+# tskit
 ts starter

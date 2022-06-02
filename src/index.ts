@@ -2,7 +2,7 @@ import { program } from "commander";
 import init from "./init";
 
 program
-  .name("tss")
+  .name("tskit")
   .description("ts starter cli")
   .version("0.0.1", "-v, --version", "current version")
   .option("-e, --edit", "edit mode")
