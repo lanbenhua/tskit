@@ -1,23 +1,81 @@
 /* eslint-disable */
 import fs from "fs";
+import path from "path";
 import init, { copy } from "./init";
 
-const mockDir = (dir: string) => {
-  fs.mkdirSync(dir);
+const mockTemplateDir = (dir: string) => {
+  const tempdir = path.resolve(process.cwd(), "./templates", dir);
+  fs.mkdirSync(tempdir, { mode: 0o777 });
 
-  fs.openSync(`${dir}/index.ts`, fs.constants.O_CREAT | fs.constants.O_TRUNC);
-  fs.writeFileSync(`${dir}/index.ts`, "console.log('index')", {
+  fs.openSync(
+    `${tempdir}/index.ts`,
+    fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_TRUNC,
+    0o777
+  );
+  fs.writeFileSync(`${tempdir}/index.ts`, "console.log('index')", {
     encoding: "utf8",
+    mode: 0o777,
   });
 
-  fs.openSync(`${dir}/a.ts`, fs.constants.O_CREAT | fs.constants.O_TRUNC);
-  fs.writeFileSync(`${dir}/a.ts`, "console.log('a')", { encoding: "utf8" });
+  fs.openSync(
+    `${tempdir}/a.ts`,
+    fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_TRUNC,
+    0o777
+  );
+  fs.writeFileSync(`${tempdir}/a.ts`, "console.log('a')", {
+    encoding: "utf8",
+    mode: 0o777,
+  });
 
-  fs.openSync(`${dir}/b.ts`, fs.constants.O_CREAT | fs.constants.O_TRUNC);
-  fs.writeFileSync(`${dir}/b.ts`, "console.log('b')", { encoding: "utf8" });
+  fs.openSync(
+    `${tempdir}/b.ts`,
+    fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_TRUNC,
+    0o777
+  );
+  fs.writeFileSync(`${tempdir}/b.ts`, "console.log('b')", {
+    encoding: "utf8",
+    mode: 0o777,
+  });
+};
+const rmMockTemplateDir = (dir: string) => {
+  const tdir = path.resolve(process.cwd(), "./templates", dir);
+  fs.existsSync(tdir) && fs.rmSync(tdir, { recursive: true, force: true });
+};
+const mockDir = (dir: string) => {
+  fs.mkdirSync(dir, { mode: 0o777 });
+
+  fs.openSync(
+    `${dir}/index.ts`,
+    fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_TRUNC,
+    0o777
+  );
+  fs.writeFileSync(`${dir}/index.ts`, "console.log('index')", {
+    encoding: "utf8",
+    mode: 0o777,
+  });
+
+  fs.openSync(
+    `${dir}/a.ts`,
+    fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_TRUNC,
+    0o777
+  );
+  fs.writeFileSync(`${dir}/a.ts`, "console.log('a')", {
+    encoding: "utf8",
+    mode: 0o777,
+  });
+
+  fs.openSync(
+    `${dir}/b.ts`,
+    fs.constants.O_RDWR | fs.constants.O_CREAT | fs.constants.O_TRUNC,
+    0o777
+  );
+  fs.writeFileSync(`${dir}/b.ts`, "console.log('b')", {
+    encoding: "utf8",
+    mode: 0o777,
+  });
 };
 const rmMockDir = (dir: string) => {
-  fs.existsSync(dir) && fs.rmSync(dir, { recursive: true });
+  fs.existsSync(dir) && fs.rmSync(dir, { recursive: true, force: true });
 };
 
 describe("test 'copy'", () => {
@@ -33,8 +91,13 @@ describe("test 'copy'", () => {
         rmMockDir("yyy");
       });
 
-      it("not throw error", () => {
-        expect(() => copy("xxx", "yyy")).not.toThrow();
+      it("not throw error", async () => {
+        expect.assertions(0);
+        try {
+          await copy("xxx", "yyy");
+        } catch (err) {
+          expect(err).toBeNull();
+        }
       });
     });
 
@@ -49,8 +112,13 @@ describe("test 'copy'", () => {
         rmMockDir("yyy");
       });
 
-      it("not throw error", () => {
-        expect(() => copy("xxx", "yyy")).not.toThrow();
+      it("not throw error", async () => {
+        expect.assertions(0);
+        try {
+          await copy("xxx", "yyy");
+        } catch (err) {
+          expect(err).toBeNull();
+        }
       });
     });
   });
@@ -67,8 +135,13 @@ describe("test 'copy'", () => {
         rmMockDir("yyy");
       });
 
-      it("not throw error", () => {
-        expect(() => copy("xxx", "yyy")).toThrow();
+      it("throw error", async () => {
+        expect.assertions(1);
+        try {
+          await copy("xxx", "yyy");
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
       });
     });
 
@@ -83,8 +156,13 @@ describe("test 'copy'", () => {
         rmMockDir("yyy");
       });
 
-      it("not throw error", () => {
-        expect(() => copy("xxx", "yyy")).toThrow();
+      it("throw error", async () => {
+        expect.assertions(1);
+        try {
+          await copy("xxx", "yyy");
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
       });
     });
   });
@@ -92,38 +170,123 @@ describe("test 'copy'", () => {
 
 describe("test 'init'", () => {
   describe("'xxx' exists", () => {
-    beforeEach(() => {
-      mockDir("xxx");
+    describe("'yyy' exists", () => {
+      beforeEach(() => {
+        rmMockTemplateDir("xxx");
+        mockTemplateDir("xxx");
+        rmMockDir("yyy");
+        mockDir("yyy");
+      });
+      afterEach(() => {
+        rmMockTemplateDir("xxx");
+        rmMockDir("yyy");
+      });
+
+      it("not force throw error", async () => {
+        expect.assertions(1);
+        try {
+          await init("yyy", "xxx", false);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
+      it("force not throw error", async () => {
+        expect.assertions(0);
+        try {
+          await init("yyy", "xxx", true);
+        } catch (err) {
+          expect(err).toBeNull();
+        }
+      });
     });
 
-    afterEach(() => {
-      rmMockDir("xxx");
-    });
+    describe("'yyy' not exists", () => {
+      beforeEach(() => {
+        rmMockTemplateDir("xxx");
+        mockTemplateDir("xxx");
+        rmMockDir("yyy");
+      });
+      afterEach(() => {
+        rmMockTemplateDir("xxx");
+        rmMockDir("yyy");
+      });
 
-    it("init 'xxx' not force", () => {
-      expect(() => init("xxx", "ts", false)).toThrow();
-    });
-
-    it("init 'xxx' force", () => {
-      expect(() => init("xxx", "ts", true)).not.toThrow();
+      it("not force not throw error", async () => {
+        expect.assertions(0);
+        try {
+          await init("yyy", "xxx", false);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
+      it("force not throw error", async () => {
+        expect.assertions(0);
+        try {
+          await init("yyy", "xxx", true);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
     });
   });
 
   describe("'xxx' not exists", () => {
-    beforeEach(() => {
-      rmMockDir("xxx");
+    describe("'yyy' exists", () => {
+      beforeEach(() => {
+        rmMockTemplateDir("xxx");
+        rmMockDir("yyy");
+        mockDir("yyy");
+      });
+      afterEach(() => {
+        rmMockTemplateDir("xxx");
+        rmMockDir("yyy");
+      });
+
+      it("not force throw error", async () => {
+        expect.assertions(1);
+        try {
+          await init("yyy", "xxx", false);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
+      it("force throw error", async () => {
+        expect.assertions(1);
+        try {
+          await init("yyy", "xxx", true);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
     });
 
-    afterEach(() => {
-      rmMockDir("xxx");
-    });
+    describe("'yyy' not exists", () => {
+      beforeEach(() => {
+        rmMockTemplateDir("xxx");
+        rmMockDir("yyy");
+      });
+      afterEach(() => {
+        rmMockTemplateDir("xxx");
+        rmMockDir("yyy");
+      });
 
-    it("init 'xxx' not force", () => {
-      expect(() => init("xxx", "ts", false)).not.toThrow();
-    });
+      it("not force throw error", async () => {
+        expect.assertions(1);
+        try {
+          await init("yyy", "xxx", false);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
 
-    it("init 'xxx' force", () => {
-      expect(() => init("xxx", "ts", true)).not.toThrow();
+      it("force throw error", async () => {
+        expect.assertions(1);
+        try {
+          await init("yyy", "xxx", true);
+        } catch (err) {
+          expect(err).not.toBeNull();
+        }
+      });
     });
   });
 });

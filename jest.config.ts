@@ -1,6 +1,6 @@
-import type { InitialOptionsTsJest } from "ts-jest";
+import type { Config } from "@jest/types";
 
-const config: InitialOptionsTsJest = {
+const config: Config.InitialOptions = {
   preset: "ts-jest",
   testEnvironment: "node",
   verbose: true,
@@ -17,7 +17,9 @@ const config: InitialOptionsTsJest = {
     "ts-jest": {
       // ts-jest configuration goes here
       tsconfig: "./tsconfig.json",
+      // useESM: true,
     },
   },
 };
+
 export default config;
