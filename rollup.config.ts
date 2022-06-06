@@ -22,6 +22,7 @@ const config: RollupOptions[] = [
     output: {
       dir: cwd("./lib"),
       // file: './lib/index.js',
+      sourcemap: true,
       format: "cjs",
     },
   },
