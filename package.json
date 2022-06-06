@@ -1,6 +1,6 @@
 {
   "name": "tskit",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "ts starter cli",
   "source": "src/index.ts",
   "main": "lib/index.js",
