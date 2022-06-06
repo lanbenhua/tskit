@@ -5,3 +5,6 @@
 # /templates
 
 .eslintcache
+
+*.test.ts
+*.spec.ts

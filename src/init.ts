@@ -9,7 +9,7 @@ const TEMPLATES_DIR = path.resolve(__dirname, "../templates");
 const getTemplateDir = (template: string): string =>
   path.resolve(TEMPLATES_DIR, template);
 
-const copy = (fromDir: string, toDir: string) => {
+export const copy = (fromDir: string, toDir: string) => {
   if (!isExists(fromDir)) throw new Error(`${fromDir} is not exists.`);
   if (!isDirectory(fromDir)) throw new Error(`${fromDir} is not a directory.`);
 
@@ -49,7 +49,7 @@ const init = (dir: string, template: string, force?: boolean) => {
 
   if (force && isCurrentDirExists) {
     console.log(chalk.green(`[tskit] exists '${fullpath}'`));
-    fs.rmdirSync(dir, { recursive: true });
+    fs.rmSync(dir, { recursive: true });
     console.log(chalk.green(`[tskit] removed '${fullpath}'`));
   }
 
