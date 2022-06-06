@@ -3,6 +3,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import rollupTypescript from "@rollup/plugin-typescript";
 // import { terser } from "rollup-plugin-terser";
 import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
 import { RollupOptions } from "rollup";
 import path from "path";
 
@@ -12,6 +13,7 @@ const config: RollupOptions[] = [
   {
     input: cwd("./src/index.ts"),
     plugins: [
+      json(),
       commonjs(),
       nodeResolve(),
       rollupTypescript({

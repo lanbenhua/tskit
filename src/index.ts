@@ -1,4 +1,5 @@
 import { program, Option, Argument, OptionValues } from "commander";
+import { name, description, version } from "../package.json";
 import init from "./init";
 
 const dirArgument = new Argument(
@@ -18,9 +19,9 @@ const forceOptions = new Option(
 );
 
 program
-  .name("tskit")
-  .description("ts starter cli")
-  .version("0.0.1", "-v, --version", "print the current version")
+  .name(name)
+  .description(description)
+  .version(version, "-v, --version", "print the current version")
   .addArgument(dirArgument)
   .addOption(templateOption)
   .addOption(forceOptions)
