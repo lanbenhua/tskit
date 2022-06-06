@@ -59,7 +59,7 @@
   },
   "lint-staged": {
     "**/*.ts": [
-      "eslint --fix --cache --max-warnings 0",
+      "eslint --fix --cache --max-warnings 0 'src/**'",
       "prettier --write",
       "git add"
     ]
