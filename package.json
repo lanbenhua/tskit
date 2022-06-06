@@ -2,11 +2,12 @@
   "name": "tskit",
   "version": "0.0.1",
   "description": "ts starter cli",
+  "source": "src/index.ts",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "prepare": "husky install",
-    "pre-build": "rm -rf ./lib && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "build": "rm -rf ./lib && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "build:types": "tsc -d --emitDeclarationOnly --declarationDir lib/types",
     "start": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript -w",
     "lint": "tsc --noEmit && eslint --fix --cache --max-warnings 0 --ext .ts,.js ./src && prettier --write ./src"
@@ -21,8 +22,8 @@
     "README.md",
     "LICENSE"
   ],
-  "keywords": [],
-  "author": "",
+  "keywords": ["ts", "typescript", "kit", "starter"],
+  "author": "lanbenhua",
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.0",

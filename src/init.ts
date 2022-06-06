@@ -19,10 +19,10 @@ const copy = (fromDir: string, toDir: string) => {
   }
   if (!isDirectory(toDir)) throw new Error(`${toDir} is not a directory.`);
 
-  fsPromise.readdir(fromDir).then((dirChildren) => {
-    dirChildren.forEach((dirChild) => {
-      const fromPath = path.resolve(fromDir, dirChild);
-      const toPath = path.resolve(toDir, dirChild);
+  fsPromise.readdir(fromDir).then((subFilenames) => {
+    subFilenames.forEach((filename) => {
+      const fromPath = path.resolve(fromDir, filename);
+      const toPath = path.resolve(toDir, filename);
 
       if (isDirectory(fromPath)) return copy(fromPath, toPath);
 
@@ -39,23 +39,23 @@ const copy = (fromDir: string, toDir: string) => {
 };
 
 const init = (dir: string, template: string, force?: boolean) => {
-  const fullDirPath = path.resolve(process.cwd(), dir);
-  const isDirExists = isExists(fullDirPath);
+  const fullpath = path.resolve(process.cwd(), dir);
+  const isCurrentDirExists = isExists(fullpath);
 
-  if (!force && isDirExists)
+  if (!force && isCurrentDirExists)
     throw new Error(
-      `${fullDirPath} exists, you can use '--force' or '-f' to force clear the directory.`
+      `${fullpath} exists, you can use '--force' or '-f' to force clear the directory.`
     );
 
-  if (force && isDirExists) {
-    console.log(chalk.green(`[tskit] exists '${fullDirPath}'`));
+  if (force && isCurrentDirExists) {
+    console.log(chalk.green(`[tskit] exists '${fullpath}'`));
     fs.rmdirSync(dir, { recursive: true });
-    console.log(chalk.green(`[tskit] removed '${fullDirPath}'`));
+    console.log(chalk.green(`[tskit] removed '${fullpath}'`));
   }
 
   const templateDir = getTemplateDir(template);
 
-  copy(templateDir, fullDirPath);
+  copy(templateDir, fullpath);
 };
 
 export default init;
