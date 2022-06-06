@@ -1,2 +1,2 @@
 # tskit
-ts starter
+ts starter cli
