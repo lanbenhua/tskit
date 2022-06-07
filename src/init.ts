@@ -3,10 +3,8 @@ import path from "path";
 import fs from "fs";
 import { isExists, isDirectory, isFile } from "./utils";
 
-const TEMPLATES_DIR = path.resolve(process.cwd(), "templates");
-
-const getTemplateDir = (template: string): string =>
-  path.resolve(TEMPLATES_DIR, template);
+const getTplDir = (tpl: string): string =>
+  path.resolve(__dirname, "../templates", tpl);
 
 export const copy = async (fromDir: string, toDir: string) => {
   if (!isExists(fromDir)) throw new Error(`${fromDir} is not exists`);
@@ -59,7 +57,7 @@ const init = async (dir: string, template: string, force?: boolean) => {
     console.log(chalk.green(`[tskit] removed dir: '${fullpath}'`));
   }
 
-  await copy(getTemplateDir(template), fullpath);
+  await copy(getTplDir(template), fullpath);
 };
 
 export default init;

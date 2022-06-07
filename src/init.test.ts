@@ -4,7 +4,7 @@ import path from "path";
 import init, { copy } from "./init";
 
 const mockTemplateDir = (dir: string) => {
-  const tempdir = path.resolve(process.cwd(), "./templates", dir);
+  const tempdir = path.resolve(__dirname, "../templates", dir);
   fs.mkdirSync(tempdir, { mode: 0o777 });
 
   fs.openSync(
@@ -38,7 +38,7 @@ const mockTemplateDir = (dir: string) => {
   });
 };
 const rmMockTemplateDir = (dir: string) => {
-  const tdir = path.resolve(process.cwd(), "./templates", dir);
+  const tdir = path.resolve(__dirname, "../templates", dir);
   fs.existsSync(tdir) && fs.rmSync(tdir, { recursive: true, force: true });
 };
 const mockDir = (dir: string) => {
