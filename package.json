@@ -21,6 +21,7 @@
     "lib",
     "cli",
     "templates",
+    "templates/**/*",
     "README.md",
     "LICENSE"
   ],
