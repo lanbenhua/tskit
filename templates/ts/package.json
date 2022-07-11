@@ -14,11 +14,7 @@
     "start": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript -w",
     "lint": "tsc --noEmit && eslint --fix --cache --max-warnings 0 --ext .ts,.js ./src && prettier --write ./src"
   },
-  "files": [
-    "lib",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["*"],
   "keywords": [],
   "author": "",
   "license": "ISC",
